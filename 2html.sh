@@ -11,6 +11,7 @@ file2html() {
 	cp "$1" "$srcfile"
 
 	vim -E -s -c "let g:html_no_progress=1" -c "syntax on" \
+		-c "set t_Co=256" \
 		${colorscheme:+-c "colo $colorscheme"} \
 		-c "runtime syntax/2html.vim" \
 		-cwqa "$srcfile" >&-
