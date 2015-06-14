@@ -3,13 +3,14 @@
 
 opt_body=
 opt_css=
+colorscheme=
 
 file2html() {
 	local srcfile="$tmpdir/$(basename "$1")"
 	cp "$1" "$srcfile"
 
 	vim -E -s -c "let g:html_no_progress=1" -c "syntax on" \
-		-c "colo github" \
+		${colorscheme:+-c "colo $colorscheme"} \
 		-c "runtime syntax/2html.vim" \
 		-cwqa "$srcfile" >&-
 
@@ -30,9 +31,14 @@ tmpdir=$(mktemp -d)
 test -d "$tmpdir" || exit 1
 trap "rm -rf $tmpdir" 0 1 2 3 15
 
+cmd=
 for arg
 do case "$arg" in
 	-b|--body) opt_body=1;;
 	-c|--css) opt_css=1;;
-	*) file2html "$arg";;
+	-o|--colorscheme) cmd=colors;;
+	*) case $cmd in
+		colors) colorscheme="$arg"; cmd=;;
+		*) file2html $arg;;
+	esac;;
 esac done
