@@ -35,16 +35,16 @@ non-built-in colorscheme, use e.g. `--source ~/.vim/colors/coolscheme.vim`
 
 ## Example
 
-	#!/bin/sh
-	cat <<-EOF
+	cat >coolfile.html <<EOF
 		<html>
 			<head>
 				<link rel="stylesheet" href="syntax.css">
 			</head>
 		<body>
+			$(2html.sh --body --css syntax.css coolfile.c)
+		</body>
+	</html>
 	EOF
-	2html.sh --body --css syntax.css coolfile.c
-	echo '</body></html>'
 
 ## License
 
