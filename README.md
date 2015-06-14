@@ -25,6 +25,13 @@ output an entire html file
 - `-c file` `--css file`: output the generated CSS rules separately to the
   given file
 - `-o theme` `--colorscheme theme`: use the given color scheme
+- `-s file` `--source file`: source the given file before rendering
+
+The `--source` option is provided mainly as an alternative for `--colorscheme`
+for colorschemes that are not in vim's default runtime path, since we skip
+loading your .vimrc and plugins to improve performance. So to use a
+non-built-in colorscheme, use e.g. `--source ~/.vim/colors/coolscheme.vim`
+
 
 ## Example
 

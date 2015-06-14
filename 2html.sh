@@ -4,6 +4,7 @@
 opt_body=
 css_file=
 colorscheme=
+source=
 
 file2html() {
 	local srcfile="$tmpdir/$(basename "$1")"
@@ -13,6 +14,7 @@ file2html() {
 	vim -E -s -c "let g:html_no_progress=1" -c "syntax on" \
 		-c "set t_Co=256" \
 		${colorscheme:+-c "colo $colorscheme"} \
+		${source:+-c "source $source"} \
 		-c "runtime syntax/2html.vim" \
 		-cwqa "$srcfile" >&-
 
@@ -40,9 +42,11 @@ do case "$arg" in
 	-b|--body) opt_body=1;;
 	-c|--css) cmd=css;;
 	-o|--colorscheme) cmd=colors;;
+	-s|--source) cmd=source;;
 	*) case $cmd in
 		css) css_file="$arg"; cmd=;;
 		colors) colorscheme="$arg"; cmd=;;
+		source) source="$arg"; cmd=;;
 		*) file2html $arg;;
 	esac;;
 esac done
