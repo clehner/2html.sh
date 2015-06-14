@@ -2,7 +2,7 @@
 # 2html - render a file as html using 2html.vim
 
 opt_body=
-opt_css=
+css_file=
 colorscheme=
 
 file2html() {
@@ -23,8 +23,9 @@ file2html() {
 	else cat
 	fi <"$destfile"
 
-	if test -n "$opt_css"
-	then sed -n '0,/<style/d; /^<!--/d; /^-->/q; p' <"$destfile" >&3
+	if test -n "$css_file"
+	then sed -n '0,/<style/d; /^<!--/d; /^-->/q; p' <"$destfile" \
+		>"$css_file"
 	fi
 
 	rm "$srcfile" "$destfile"
@@ -39,9 +40,10 @@ cmd=
 for arg
 do case "$arg" in
 	-b|--body) opt_body=1;;
-	-c|--css) opt_css=1;;
+	-c|--css) cmd=css;;
 	-o|--colorscheme) cmd=colors;;
 	*) case $cmd in
+		css) css_file="$arg"; cmd=;;
 		colors) colorscheme="$arg"; cmd=;;
 		*) file2html $arg;;
 	esac;;

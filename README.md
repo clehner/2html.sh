@@ -22,7 +22,8 @@ allowing for extracting the body or CSS from the resulting HTML.
 
 - `-b` `--body`: output only the body of the produced html. default is to
 output an entire html file
-- `-c` `--css`: output the generated CSS rules separately on fd 3.
+- `-c file` `--css file`: output the generated CSS rules separately to the
+  given file
 - `-o theme` `--colorscheme theme`: use the given color scheme
 
 ## Example
@@ -35,7 +36,7 @@ output an entire html file
 			</head>
 		<body>
 	EOF
-	2html.sh --body --css coolfile.c 3>syntax.css
+	2html.sh --body --css syntax.css coolfile.c
 	echo '</body></html>'
 
 ## License
