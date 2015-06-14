@@ -9,10 +9,13 @@ file2html() {
 	local srcfile="$tmpdir/$(basename "$1")"
 	cp "$1" "$srcfile"
 
-	vim -E -s -c "let g:html_no_progress=1" -c "syntax on" \
-		${colorscheme:+-c "colo $colorscheme"} \
-		-c "runtime syntax/2html.vim" \
-		-cwqa "$srcfile" >&-
+	vim -Es "$srcfile" <<-EX
+		let g:html_no_progress=1
+		syntax on
+		${colorscheme:+colo $colorscheme}
+		runtime syntax/2html.vim
+		wqa
+	EX
 
 	if test -n "$opt_body"
 	then sed -n '/<pre/,/<\/pre>/p'
