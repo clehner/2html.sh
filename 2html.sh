@@ -7,6 +7,7 @@ colorscheme=
 
 file2html() {
 	local srcfile="$tmpdir/$(basename "$1")"
+	local destfile="$srcfile.html"
 	cp "$1" "$srcfile"
 
 	vim -Es "$srcfile" <<-EX
@@ -20,13 +21,13 @@ file2html() {
 	if test -n "$opt_body"
 	then sed -n '/<pre/,/<\/pre>/p'
 	else cat
-	fi <"$srcfile.html"
+	fi <"$destfile"
 
 	if test -n "$opt_css"
-	then sed -n '0,/<style/d; /^<!--/d; /^-->/q; p' <"$srcfile.html" >&3
+	then sed -n '0,/<style/d; /^<!--/d; /^-->/q; p' <"$destfile" >&3
 	fi
 
-	rm "$srcfile" "$srcfile.html"
+	rm "$srcfile" "$destfile"
 }
 
 # move to a temp dir so that existing swap files don't interfere
